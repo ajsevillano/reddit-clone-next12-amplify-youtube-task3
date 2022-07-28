@@ -1,21 +1,27 @@
 {
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-redditcloneupdated-dev-153006-authRole",
-      "UnauthRoleArn": "arn:aws:iam::092552755756:role/amplify-redditcloneupdated-dev-153006-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::092552755756:role/amplify-redditcloneupdated-dev-153006-authRole",
-      "Region": "eu-west-2",
-      "DeploymentBucketName": "amplify-redditcloneupdated-dev-153006-deployment",
-      "UnauthRoleName": "amplify-redditcloneupdated-dev-153006-unauthRole",
-      "StackName": "amplify-redditcloneupdated-dev-153006",
-      "StackId": "arn:aws:cloudformation:eu-west-2:092552755756:stack/amplify-redditcloneupdated-dev-153006/c6a9f2f0-0e81-11ed-8297-0a0a3112e8da",
-      "AmplifyAppId": "d4b6jw9crl02i"
-    },
-    "categories": {
-      "auth": {
-        "redditcloneupdated39733d76": {},
-        "true": {}
-      }
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-redditcloneupdated-dev-153006-authRole",
+            "UnauthRoleArn": "arn:aws:iam::092552755756:role/amplify-redditcloneupdated-dev-153006-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::092552755756:role/amplify-redditcloneupdated-dev-153006-authRole",
+            "Region": "eu-west-2",
+            "DeploymentBucketName": "amplify-redditcloneupdated-dev-153006-deployment",
+            "UnauthRoleName": "amplify-redditcloneupdated-dev-153006-unauthRole",
+            "StackName": "amplify-redditcloneupdated-dev-153006",
+            "StackId": "arn:aws:cloudformation:eu-west-2:092552755756:stack/amplify-redditcloneupdated-dev-153006/c6a9f2f0-0e81-11ed-8297-0a0a3112e8da",
+            "AmplifyAppId": "d4b6jw9crl02i"
+        },
+        "categories": {
+            "auth": {
+                "redditcloneupdated39733d76": {},
+                "true": {}
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d4b6jw9crl02i",
+                    "type": "cicd"
+                }
+            }
+        }
     }
-  }
 }

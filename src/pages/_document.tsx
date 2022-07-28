@@ -24,6 +24,7 @@ export default class MyDocument extends Document {
   }
 }
 
+//
 // MyDocument.getInitialProps = async (ctx) => {
 //   // Render app and page and get the context of the page with collected side effects.
 
