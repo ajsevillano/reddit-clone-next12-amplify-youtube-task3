@@ -16,5 +16,11 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientIDWeb": "string",
             "AppClientID": "string"
         }
+    },
+    "storage": {
+        "reditcloneupdatedImages": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
 }

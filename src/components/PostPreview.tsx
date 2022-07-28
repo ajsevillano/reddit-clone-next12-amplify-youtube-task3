@@ -37,21 +37,21 @@ export default function PostPreview({ post }: Props): ReactElement {
     undefined
   );
   const [upvotes, setUpvotes] = useState<number>(
-    post.votes.items
-      ? post.votes.items.filter((v) => v.vote === 'upvote').length
+    post.votes!.items
+      ? post.votes!.items.filter((v) => v!.vote === 'upvote').length
       : 0
   );
 
   const [downvotes, setDownvotes] = useState<number>(
-    post.votes.items
-      ? post.votes.items.filter((v) => v.vote === 'downvote').length
+    post.votes!.items
+      ? post.votes!.items.filter((v) => v!.vote === 'downvote').length
       : 0
   );
 
   useEffect(() => {
     if (user) {
-      const tryFindVote = post.votes.items?.find(
-        (v) => v.owner === user.getUsername()
+      const tryFindVote = post.votes!.items?.find(
+        (v) => v!.owner === user.getUsername()
       );
 
       if (tryFindVote) {
@@ -59,12 +59,12 @@ export default function PostPreview({ post }: Props): ReactElement {
         setExistingVoteId(tryFindVote.id);
       }
     }
-  }, [user, post.votes.items]);
+  }, [user, post.votes!.items]);
 
   useEffect(() => {
     async function getImageFromStorage() {
       try {
-        const signedURL = await Storage.get(post.image); // get key from Storage.list
+        const signedURL = await Storage.get(post?.image); // get key from Storage.list
         setPostImage(signedURL);
       } catch (error) {
         console.log('No image found.');
@@ -116,7 +116,7 @@ export default function PostPreview({ post }: Props): ReactElement {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as { data: CreateVoteMutation };
 
-      if (createNewVote.data.createVote.vote === 'downvote') {
+      if (createNewVote!.data.createVote.vote === 'downvote') {
         setDownvotes(downvotes + 1);
       }
       if (createNewVote.data.createVote.vote === 'upvote') {

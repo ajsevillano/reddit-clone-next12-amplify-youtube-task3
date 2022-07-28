@@ -4,8 +4,8 @@ import { Grid, Typography } from '@mui/material';
 import Image from 'next/image';
 
 interface Props {
-  file: File;
-  setFile: React.Dispatch<React.SetStateAction<File>>;
+  file: File | undefined;
+  setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
 }
 
 export default function ImageDropzone({ file, setFile }: Props) {

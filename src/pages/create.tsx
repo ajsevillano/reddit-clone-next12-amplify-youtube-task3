@@ -57,7 +57,7 @@ export default function Create({}: Props): ReactElement {
 
         console.log('New post created successfully:', createNewPost);
 
-        router.push(`/post/${createNewPost.data.createPost.id}`);
+        router.push(`/post/${createNewPost.data.createPost!.id}`);
       } catch (error) {
         console.error('Error uploading file: ', error);
       }
@@ -73,11 +73,9 @@ export default function Create({}: Props): ReactElement {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as { data: CreatePostMutation };
 
-      router.push(`/post/${createNewPostWithoutImage.data.createPost.id}`);
+      router.push(`/post/${createNewPostWithoutImage.data.createPost!.id}`);
     }
   };
-
-  console.log('The current file:', file);
 
   return (
     <div>
