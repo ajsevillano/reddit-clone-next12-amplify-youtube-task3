@@ -33,7 +33,7 @@ type Props = {
 
 export default function IndividualPost({ post }: Props): ReactElement {
   const [comments, setComments] = useState<Comment[]>(
-    post.comments.items as Comment[]
+    post.comments!.items as Comment[]
   );
   //Destructuring the useForm hook.
   const {
@@ -91,7 +91,7 @@ export default function IndividualPost({ post }: Props): ReactElement {
             />
           </Grid>
           <Grid item>
-            <Button variant="contained" color="default" type="submit">
+            <Button variant="contained" color="primary" type="submit">
               Add comment
             </Button>
           </Grid>
@@ -113,7 +113,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postsQuery = (await SSR.API.graphql({
     query: getPost,
     variables: {
-      id: params.id,
+      id: params?.id,
     },
   })) as { data: GetPostQuery };
 
@@ -137,8 +137,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     errors: any[];
   };
 
-  const paths = response.data.listPosts.items.map((post) => ({
-    params: { id: post.id },
+  const paths = response.data.listPosts!.items!.map((post) => ({
+    params: { id: post!.id },
   }));
 
   return { paths, fallback: 'blocking' };
