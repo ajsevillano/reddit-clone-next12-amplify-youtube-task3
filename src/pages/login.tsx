@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Button, Grid, TextField } from '@mui/material';
 //Amplify
 import { Auth } from 'aws-amplify';
-import { CognitoUser } from '@aws-amplify/auth';
+
 //Context
 import { useUser } from '../context/AuthContext';
 import { useRouter } from 'next/router';
@@ -17,7 +17,6 @@ interface IFormInput {
 }
 
 export default function Login() {
-  const { user, setUser } = useUser();
   const router = useRouter();
   const [signInError, setSignInError] = useState<string>('');
 

@@ -45,8 +45,10 @@ export default function Signup() {
         setShowCode(true);
       }
     } catch (error) {
-      console.error(error);
-      setSignUpError(error.message);
+      if (error instanceof Error) {
+        console.error(error);
+        setSignUpError(error.message);
+      }
     }
   };
 
