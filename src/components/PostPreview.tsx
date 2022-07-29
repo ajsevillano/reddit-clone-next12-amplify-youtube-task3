@@ -29,7 +29,7 @@ interface Props {
 export default function PostPreview({ post }: Props): ReactElement {
   const router = useRouter();
   const { user } = useUser();
-  const [postImage, setPostImage] = useState<string | []>([]);
+  const [postImage, setPostImage] = useState<string>();
   const [existingVote, setExistingVote] = useState<string | undefined>(
     undefined
   );
@@ -59,12 +59,12 @@ export default function PostPreview({ post }: Props): ReactElement {
         setExistingVoteId(tryFindVote.id);
       }
     }
-  }, [user, post.votes.items]);
+  }, [user, post.votes]);
 
   useEffect(() => {
     async function getImageFromStorage() {
       try {
-        const signedURL = await Storage.get(post.image); // get key from Storage.list
+        const signedURL = await Storage.get(post.image!); // get key from Storage.list
         setPostImage(signedURL);
       } catch (error) {
         console.log('No image found.');
@@ -77,7 +77,7 @@ export default function PostPreview({ post }: Props): ReactElement {
   const addVote = async (voteType: string) => {
     if (existingVote && existingVote != voteType) {
       const updateVoteInput: UpdateVoteInput = {
-        id: existingVoteId,
+        id: existingVoteId!,
         vote: voteType,
         postID: post.id,
       };
@@ -100,7 +100,7 @@ export default function PostPreview({ post }: Props): ReactElement {
         setDownvotes(downvotes + 1);
       }
       setExistingVote(voteType);
-      setExistingVoteId(updateThisVote.data.updateVote.id);
+      setExistingVoteId(updateThisVote.data.updateVote!.id);
       console.log('Updated vote:', updateThisVote);
     }
 
@@ -116,14 +116,14 @@ export default function PostPreview({ post }: Props): ReactElement {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as { data: CreateVoteMutation };
 
-      if (createNewVote!.data.createVote.vote === 'downvote') {
+      if (createNewVote.data.createVote!.vote === 'downvote') {
         setDownvotes(downvotes + 1);
       }
-      if (createNewVote.data.createVote.vote === 'upvote') {
+      if (createNewVote.data.createVote!.vote === 'upvote') {
         setUpvotes(upvotes + 1);
       }
       setExistingVote(voteType);
-      setExistingVoteId(createNewVote.data.createVote.id);
+      setExistingVoteId(createNewVote.data.createVote!.id);
       console.log('Created vote:', createNewVote);
     }
   };
