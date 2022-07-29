@@ -29,7 +29,7 @@ interface Props {
 export default function PostPreview({ post }: Props): ReactElement {
   const router = useRouter();
   const { user } = useUser();
-  const [postImage, setPostImage] = useState<string | undefined>(undefined);
+  const [postImage, setPostImage] = useState<string | []>([]);
   const [existingVote, setExistingVote] = useState<string | undefined>(
     undefined
   );
@@ -59,12 +59,12 @@ export default function PostPreview({ post }: Props): ReactElement {
         setExistingVoteId(tryFindVote.id);
       }
     }
-  }, [user, post.votes!.items]);
+  }, [user, post.votes.items]);
 
   useEffect(() => {
     async function getImageFromStorage() {
       try {
-        const signedURL = await Storage.get(post?.image); // get key from Storage.list
+        const signedURL = await Storage.get(post.image); // get key from Storage.list
         setPostImage(signedURL);
       } catch (error) {
         console.log('No image found.');
