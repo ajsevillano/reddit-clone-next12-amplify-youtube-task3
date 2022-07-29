@@ -34,7 +34,7 @@ export default function Home() {
 
   return (
     <Container maxWidth="md">
-      {posts.map((post) => (
+      {posts.sort((a, b) => b.createdAt.localeCompare(a.createdAt)).map((post) => (
         <PostPreview key={post.id} post={post} />
       ))}
     </Container>
