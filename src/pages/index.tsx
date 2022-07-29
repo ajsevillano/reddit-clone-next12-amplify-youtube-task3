@@ -10,6 +10,16 @@ import { listPosts } from '../graphql/queries';
 import { ListPostsQuery, Post } from '../API';
 import PostPreview from '../components/PostPreview';
 
+// post object interface
+interface ObjectPost {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  __typename: 'Post';
+}
+
 export default function Home() {
   const { user } = useUser();
   const [posts, setPosts] = useState<Post[]>([]);
@@ -32,11 +42,24 @@ export default function Home() {
     fetchPostsFromApi();
   }, []);
 
+  let checkLastPost = (array: Post[], index: number) =>
+    array.length - 1 === index;
+
+  console.log(posts);
+
   return (
     <Container maxWidth="md">
-      {posts.sort((a, b) => b.createdAt.localeCompare(a.createdAt)).map((post) => (
-        <PostPreview key={post.id} post={post} />
-      ))}
+      {posts
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+        .map((post: ObjectPost, index: number, array: Post[]) => {
+          return (
+            <PostPreview
+              key={post.id}
+              post={post}
+              lastPost={checkLastPost(array, index)}
+            />
+          );
+        })}
     </Container>
   );
 }

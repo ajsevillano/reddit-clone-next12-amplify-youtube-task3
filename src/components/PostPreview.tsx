@@ -24,9 +24,10 @@ import { useUser } from '../context/AuthContext';
 
 interface Props {
   post: Post;
+  lastPost: boolean;
 }
 
-export default function PostPreview({ post }: Props): ReactElement {
+export default function PostPreview({ post, lastPost }: Props): ReactElement {
   const router = useRouter();
   const { user } = useUser();
   const [postImage, setPostImage] = useState<string>();
@@ -47,6 +48,8 @@ export default function PostPreview({ post }: Props): ReactElement {
       ? post.votes!.items.filter((v) => v!.vote === 'downvote').length
       : 0
   );
+
+  console.log(lastPost);
 
   useEffect(() => {
     if (user) {
@@ -133,7 +136,10 @@ export default function PostPreview({ post }: Props): ReactElement {
   console.log('Downvotes:', downvotes);
 
   return (
-    <Paper elevation={3}>
+    <Paper
+      elevation={3}
+      style={lastPost ? { marginBottom: 30 } : { marginBottom: 0 }}
+    >
       <Grid
         container
         direction="row"

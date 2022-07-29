@@ -60,7 +60,7 @@ export default function IndividualPost({ post }: Props): ReactElement {
 
   return (
     <Container maxWidth="md">
-      <PostPreview post={post} />
+      <PostPreview post={post} lastPost={false} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
