@@ -60,7 +60,7 @@ export default function IndividualPost({ post }: Props) {
 
   return (
     <Container maxWidth="md">
-      <PostPreview post={post} lastPost={false} />
+      <PostPreview post={post} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"

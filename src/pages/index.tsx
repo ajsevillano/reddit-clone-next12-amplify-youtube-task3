@@ -42,21 +42,12 @@ export default function Home() {
     fetchPostsFromApi();
   }, []);
 
-  let checkLastPost = (array: Post[], index: number) =>
-    array.length - 1 === index;
-
   return (
     <Container maxWidth="md">
       {posts
         .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
         .map((post: ObjectPost, index: number, array: Post[]) => {
-          return (
-            <PostPreview
-              key={post.id}
-              post={post}
-              lastPost={checkLastPost(array, index)}
-            />
-          );
+          return <PostPreview key={post.id} post={post} />;
         })}
     </Container>
   );

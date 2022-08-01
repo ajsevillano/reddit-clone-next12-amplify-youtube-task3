@@ -74,6 +74,11 @@ const theme = createTheme({
       lineHeight: 1.75,
       color: '#9CA3AF',
     },
+    subtitle1: {
+      fontSize: '1rem',
+      lineHeight: 1.75,
+      color: '#e42a2a',
+    },
   },
 });
 

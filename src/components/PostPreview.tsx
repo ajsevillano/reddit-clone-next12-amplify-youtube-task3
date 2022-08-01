@@ -1,5 +1,12 @@
 //Material UI Icons components
-import { ButtonBase, Grid, IconButton, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  ButtonBase,
+  Grid,
+  IconButton,
+  Paper,
+  Typography,
+} from '@mui/material';
 import {
   CreateVoteInput,
   CreateVoteMutation,
@@ -24,10 +31,9 @@ import { useUser } from '../context/AuthContext';
 
 interface Props {
   post: Post;
-  lastPost: boolean;
 }
 
-export default function PostPreview({ post, lastPost }: Props) {
+export default function PostPreview({ post }: Props) {
   const router = useRouter();
   const { user } = useUser();
   const [postImage, setPostImage] = useState<string>();
@@ -48,8 +54,6 @@ export default function PostPreview({ post, lastPost }: Props) {
       ? post.votes!.items.filter((v) => v!.vote === 'downvote').length
       : 0
   );
-
-  console.log(lastPost);
 
   useEffect(() => {
     if (user) {
@@ -134,7 +138,13 @@ export default function PostPreview({ post, lastPost }: Props) {
   return (
     <Paper
       elevation={3}
-      style={lastPost ? { marginBottom: 30 } : { marginBottom: 0 }}
+      style={{
+        marginBottom: 30,
+        borderTop: '5px  solid',
+        borderImage: 'linear-gradient(to left, #f5af19, #e42a2a)',
+        borderImageSlice: 1,
+        borderWidth: '5px',
+      }}
     >
       <Grid
         container
@@ -143,7 +153,7 @@ export default function PostPreview({ post, lastPost }: Props) {
         alignItems="flex-start"
         wrap="nowrap"
         spacing={3}
-        style={{ padding: 12, marginTop: 24 }}
+        style={{ padding: 12, marginTop: 4 }}
       >
         {/* Upvote / votes / downvote */}
         <Grid item style={{ maxWidth: 128 }}>
@@ -177,7 +187,10 @@ export default function PostPreview({ post, lastPost }: Props) {
             <Grid container direction="column" alignItems="flex-start">
               <Grid item>
                 <Typography variant="body1">
-                  Posted by <b>{post.owner}</b>{' '}
+                  Posted by
+                  <Box component="span" style={{ color: '#f5af19' }} m={1}>
+                    {post.owner}
+                  </Box>
                   {formatDatePosted(post.createdAt)} hours ago
                 </Typography>
               </Grid>
