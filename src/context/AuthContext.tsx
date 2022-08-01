@@ -1,7 +1,6 @@
 import {
   createContext,
   Dispatch,
-  ReactElement,
   SetStateAction,
   useContext,
   useEffect,
@@ -21,7 +20,7 @@ interface Props {
 
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
-export default function AuthContext({ children }: Props): ReactElement {
+export default function AuthContext({ children }: Props) {
   const [user, setUser] = useState<CognitoUser | null>(null);
 
   useEffect(() => {

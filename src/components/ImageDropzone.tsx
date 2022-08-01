@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Grid, Typography } from '@mui/material';
 import Image from 'next/image';

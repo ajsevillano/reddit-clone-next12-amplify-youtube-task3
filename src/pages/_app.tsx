@@ -1,5 +1,5 @@
 //Libraries
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 //Context
 import AuthContext from '../context/AuthContext';
 //Next components

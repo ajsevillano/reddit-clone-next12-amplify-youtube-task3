@@ -1,5 +1,4 @@
 import { Grid, Paper, Typography } from '@mui/material';
-import React, { ReactElement } from 'react';
 import { Comment } from '../API';
 import { formatDatePosted } from '../lib/formatDatePosted';
 
@@ -7,7 +6,7 @@ interface Props {
   comment: Comment;
 }
 
-export default function PostComment({ comment }: Props): ReactElement {
+export default function PostComment({ comment }: Props) {
   return (
     <Paper
       style={{ width: '100%', minHeight: 128, padding: 16, marginTop: 32 }}

@@ -1,7 +1,7 @@
 //Material UI
 import { Button, Container, Grid, TextField } from '@mui/material';
 //React and React Hooks libraries
-import React, { useState, ReactElement } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import ImageDropzone from '../components/ImageDropzone';
 //Other libraries
@@ -21,7 +21,7 @@ interface IFormInput {
 
 interface Props {}
 
-export default function Create({}: Props): ReactElement {
+export default function Create({}: Props) {
   const [file, setFile] = useState<File>();
   const router = useRouter();
 

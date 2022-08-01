@@ -1,7 +1,7 @@
 //React
 import { useEffect, useState } from 'react';
 //Material UI styles
-import { Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 //Context
 import { useUser } from '../context/AuthContext';
 //API & GrahpQL
@@ -44,8 +44,6 @@ export default function Home() {
 
   let checkLastPost = (array: Post[], index: number) =>
     array.length - 1 === index;
-
-  console.log(posts);
 
   return (
     <Container maxWidth="md">

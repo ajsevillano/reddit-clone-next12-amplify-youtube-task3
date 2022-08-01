@@ -76,6 +76,7 @@ export default function Header() {
                 color="inherit"
               >
                 <AccountCircle />
+                <Typography variant="body2">{user?.getUsername()}</Typography>
               </IconButton>
               <Menu
                 id="menu-appbar"

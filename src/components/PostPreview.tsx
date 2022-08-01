@@ -13,11 +13,11 @@ import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 //Other libs
-import React, { ReactElement, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { formatDatePosted } from '../lib/formatDatePosted';
 import { createVote, updateVote } from '../graphql/mutations';
 //Amplify
-import { API, Auth, Storage } from 'aws-amplify';
+import { API, Storage } from 'aws-amplify';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
 //Context
 import { useUser } from '../context/AuthContext';
@@ -27,7 +27,7 @@ interface Props {
   lastPost: boolean;
 }
 
-export default function PostPreview({ post, lastPost }: Props): ReactElement {
+export default function PostPreview({ post, lastPost }: Props) {
   const router = useRouter();
   const { user } = useUser();
   const [postImage, setPostImage] = useState<string>();
@@ -130,10 +130,6 @@ export default function PostPreview({ post, lastPost }: Props): ReactElement {
       console.log('Created vote:', createNewVote);
     }
   };
-
-  console.log(post);
-  console.log('Upvotes:', upvotes);
-  console.log('Downvotes:', downvotes);
 
   return (
     <Paper

@@ -1,5 +1,5 @@
 //React, React Hooks & Next libraries
-import React, { useState, ReactElement } from 'react';
+import { useState } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useForm, SubmitHandler } from 'react-hook-form';
 //Amplify
@@ -31,7 +31,7 @@ type Props = {
   post: Post;
 };
 
-export default function IndividualPost({ post }: Props): ReactElement {
+export default function IndividualPost({ post }: Props) {
   const [comments, setComments] = useState<Comment[]>(
     post.comments!.items as Comment[]
   );
@@ -107,7 +107,7 @@ export default function IndividualPost({ post }: Props): ReactElement {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  /* A function that returns an object with the API property. */
+  // A function that returns an object with the API property. */
   const SSR = withSSRContext();
 
   const postsQuery = (await SSR.API.graphql({
@@ -117,15 +117,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   })) as { data: GetPostQuery };
 
-  // By returning { props: { posts } }, the Individual Post component
-  // will receive `post` as a prop at build time
+  // By returning { props: { posts } }, the Individual Post component will receive `post` as a prop at build time
   return {
     props: {
       post: postsQuery.data.getPost as Post,
     },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every 10 seconds
+    // Next.js will attempt to re-generate the page  when a request comes in once every 1 second
     revalidate: 1, // In seconds
   };
 };
