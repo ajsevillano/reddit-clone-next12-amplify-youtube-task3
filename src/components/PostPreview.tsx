@@ -1,10 +1,12 @@
 //Material UI Icons components
 import {
+  Alert,
   Box,
   ButtonBase,
   Grid,
   IconButton,
   Paper,
+  Snackbar,
   Typography,
 } from '@mui/material';
 import {
@@ -36,6 +38,7 @@ interface Props {
 export default function PostPreview({ post }: Props) {
   const router = useRouter();
   const { user } = useUser();
+  const [open, setOpen] = useState<boolean>(false);
   const [postImage, setPostImage] = useState<string>();
   const [existingVote, setExistingVote] = useState<string | undefined>(
     undefined
@@ -48,6 +51,8 @@ export default function PostPreview({ post }: Props) {
       ? post.votes!.items.filter((v) => v!.vote === 'upvote').length
       : 0
   );
+
+  console.log(upvotes);
 
   const [downvotes, setDownvotes] = useState<number>(
     post.votes!.items
@@ -108,6 +113,7 @@ export default function PostPreview({ post }: Props) {
       }
       setExistingVote(voteType);
       setExistingVoteId(updateThisVote.data.updateVote!.id);
+
       console.log('Updated vote:', updateThisVote);
     }
 
@@ -131,8 +137,24 @@ export default function PostPreview({ post }: Props) {
       }
       setExistingVote(voteType);
       setExistingVoteId(createNewVote.data.createVote!.id);
+
       console.log('Created vote:', createNewVote);
     }
+
+    if (existingVote === voteType) {
+      setOpen(true);
+    }
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -226,6 +248,11 @@ export default function PostPreview({ post }: Props) {
           </ButtonBase>
         </Grid>
       </Grid>
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          You can&apos;t give more than one vote for this post.
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 }
