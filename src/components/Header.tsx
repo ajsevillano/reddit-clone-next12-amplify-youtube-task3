@@ -17,7 +17,9 @@ import {
   Button,
   Menu,
   MenuItem,
+  Box,
 } from '@mui/material';
+import { fontWeight } from '@mui/system';
 
 export default function Header() {
   const router = useRouter();
@@ -76,7 +78,9 @@ export default function Header() {
                 color="inherit"
               >
                 <AccountCircle />
-                <Typography variant="body2">{user?.getUsername()}</Typography>
+                <Box component="span" sx={{ ml: 1.5, fontSize: '1rem' }}>
+                  {user?.getUsername()}
+                </Box>
               </IconButton>
               <Menu
                 id="menu-appbar"
