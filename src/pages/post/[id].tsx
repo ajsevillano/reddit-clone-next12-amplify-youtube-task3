@@ -40,6 +40,7 @@ export default function IndividualPost({ post }: Props) {
     register,
     formState: { errors },
     handleSubmit,
+    resetField,
   } = useForm<IFormInput>();
 
   //OnSubmit takes in data, creates a new comment, and then adds that comment to the comments array.
@@ -56,6 +57,7 @@ export default function IndividualPost({ post }: Props) {
     })) as { data: CreateCommentMutation };
 
     setComments([...comments, createNewComment.data.createComment as Comment]);
+    resetField('comment');
   };
 
   return (
@@ -77,6 +79,7 @@ export default function IndividualPost({ post }: Props) {
               fullWidth
               error={errors.comment ? true : false}
               helperText={errors.comment ? errors.comment.message : null}
+              sx={{ fieldset: { border: '1px solid #4b4b4b' } }}
               {...register('comment', {
                 required: { value: true, message: 'Please enter a comment.' },
                 minLength: {
