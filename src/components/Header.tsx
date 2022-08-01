@@ -1,6 +1,6 @@
 //Next & React Libs
 import { useRouter } from 'next/router';
-import React from 'react';
+import { useState } from 'react';
 //Icons
 import { Add, Reddit, AccountCircle } from '@mui/icons-material';
 //Amplify
@@ -22,7 +22,7 @@ import {
 export default function Header() {
   const router = useRouter();
   const { user } = useUser();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
