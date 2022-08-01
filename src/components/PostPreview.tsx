@@ -160,7 +160,7 @@ export default function PostPreview({ post }: Props) {
           <Grid container direction="column" alignItems="center">
             <Grid item>
               <IconButton color="inherit" onClick={() => addVote('upvote')}>
-                <ArrowUpward />
+                {upvotes ? <ArrowUpward color="success" /> : <ArrowUpward />}
               </IconButton>
             </Grid>
             <Grid item>
@@ -175,7 +175,11 @@ export default function PostPreview({ post }: Props) {
             </Grid>
             <Grid item>
               <IconButton color="inherit" onClick={() => addVote('downvote')}>
-                <ArrowDownward />
+                {downvotes ? (
+                  <ArrowDownward color="error" />
+                ) : (
+                  <ArrowDownward />
+                )}
               </IconButton>
             </Grid>
           </Grid>

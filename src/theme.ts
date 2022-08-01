@@ -7,7 +7,7 @@ const theme = createTheme({
       default: '#0d1218',
     },
     primary: {
-      main: 'rgba(2, 106, 167, 1)',
+      main: '#e48202',
       contrastText: '#fff',
     },
     secondary: {
@@ -16,6 +16,10 @@ const theme = createTheme({
     },
     error: {
       main: '#f44336',
+      contrastText: '#fff',
+    },
+    success: {
+      main: '#097909',
       contrastText: '#fff',
     },
     text: {
