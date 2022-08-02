@@ -250,7 +250,7 @@ export default function PostPreview({ post }: Props) {
       </Grid>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          You can&apos;t give more than one vote for this post.
+          Only one vote is allow per post.
         </Alert>
       </Snackbar>
     </Paper>
