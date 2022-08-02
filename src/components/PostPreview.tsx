@@ -35,10 +35,18 @@ interface Props {
   post: Post;
 }
 
+interface Modal {
+  isOpen: boolean;
+  msg: string;
+}
+
 export default function PostPreview({ post }: Props) {
   const router = useRouter();
   const { user } = useUser();
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<Modal>({
+    isOpen: false,
+    msg: 'You are not login',
+  });
   const [postImage, setPostImage] = useState<string>();
   const [existingVote, setExistingVote] = useState<string | undefined>(
     undefined
@@ -136,7 +144,7 @@ export default function PostPreview({ post }: Props) {
     }
 
     if (existingVote === voteType) {
-      setOpen(true);
+      setOpen({ isOpen: true, msg: 'Only one vote per post is allow' });
     }
   };
 
@@ -148,12 +156,12 @@ export default function PostPreview({ post }: Props) {
       return;
     }
 
-    setOpen(false);
+    setOpen({ isOpen: false, msg: '' });
   };
 
   const checkUserLogin = (vote: string) => {
     if (!user) {
-      setOpen(true);
+      setOpen({ isOpen: true, msg: 'You must login to vote' });
     } else {
       addVote(vote);
     }
@@ -257,9 +265,13 @@ export default function PostPreview({ post }: Props) {
           </ButtonBase>
         </Grid>
       </Grid>
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+      <Snackbar
+        open={open.isOpen}
+        autoHideDuration={2000}
+        onClose={handleClose}
+      >
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          Only one vote per post is allow.
+          {open.msg}
         </Alert>
       </Snackbar>
     </Paper>
