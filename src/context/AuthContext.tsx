@@ -13,32 +13,27 @@ import { Auth, Hub } from 'aws-amplify';
 interface UserContextType {
   user: CognitoUser | null;
   setUser: Dispatch<SetStateAction<CognitoUser | null>>;
-  userInfo: UserData | undefined;
+  userInfo: Attributes | undefined;
 }
 interface Props {
   children: React.ReactElement;
 }
 
-interface UserData {
-  id: string;
-  attributes: {
-    email: string;
-    email_verified: string;
-    picture: string;
-    sub: string;
-  };
-  username: string;
+interface Attributes {
+  email: string;
+  email_verified: string;
+  picture: string;
+  sub: string;
 }
 
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
 export default function AuthContext({ children }: Props) {
   const [user, setUser] = useState<CognitoUser | null>(null);
-  const [userInfo, setUserInfo] = useState<UserData>();
+  const [userInfo, setUserInfo] = useState<Attributes>();
 
   useEffect(() => {
     checkUser();
-    getUserInfo();
   }, []);
 
   useEffect(() => {
@@ -53,21 +48,11 @@ export default function AuthContext({ children }: Props) {
       const amplifyUser = await Auth.currentAuthenticatedUser();
       if (amplifyUser) {
         setUser(amplifyUser);
+        setUserInfo(amplifyUser.attributes);
       }
     } catch (error) {
       //No current signed in user.
       setUser(null);
-    }
-  }
-
-  async function getUserInfo() {
-    try {
-      const amplifyUser = await Auth.currentUserInfo();
-      if (amplifyUser) {
-        setUserInfo(amplifyUser);
-      }
-    } catch (error) {
-      //No current signed in user.
     }
   }
 

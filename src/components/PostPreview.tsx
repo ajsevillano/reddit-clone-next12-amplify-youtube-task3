@@ -84,10 +84,6 @@ export default function PostPreview({ post }: Props) {
     getImageFromStorage();
   });
 
-  // console.log(userInfo?.attributes.picture);
-
-  console.log(user);
-
   const addVote = async (voteType: string) => {
     if (existingVote && existingVote != voteType) {
       const updateVoteInput: UpdateVoteInput = {
@@ -233,6 +229,7 @@ export default function PostPreview({ post }: Props) {
                   overflowX: 'hidden',
                 }}
               >
+                <Typography variant="body1">{}</Typography>
                 <Typography variant="body1">{post.content}</Typography>
               </Grid>
               {post.image && postImage && (

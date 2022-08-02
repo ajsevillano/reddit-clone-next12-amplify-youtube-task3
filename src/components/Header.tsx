@@ -1,10 +1,12 @@
 //Next & React Libs
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 //Icons
 import { Add, Reddit, AccountCircle } from '@mui/icons-material';
 //Amplify
 import { Auth } from 'aws-amplify';
+import { Storage } from 'aws-amplify';
 //Context
 import { useUser } from '../context/AuthContext';
 //Material UI
@@ -19,13 +21,26 @@ import {
   MenuItem,
   Box,
 } from '@mui/material';
-import { fontWeight } from '@mui/system';
 
 export default function Header() {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, userInfo } = useUser();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [postImage, setPostImage] = useState<string | undefined>();
+
+  useEffect(() => {
+    async function getImageFromStorage() {
+      try {
+        const signedURL = await Storage.get(userInfo?.picture!); // get key from Storage.list
+        setPostImage(signedURL);
+      } catch (error) {
+        console.log('No image found.');
+      }
+    }
+
+    getImageFromStorage();
+  });
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -70,6 +85,7 @@ export default function Header() {
                   <Add />
                 </IconButton>
               </Tooltip>
+
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -77,7 +93,27 @@ export default function Header() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                {postImage ? (
+                  <div
+                    style={{
+                      borderRadius: '50%',
+                      overflow: 'hidden',
+                      width: '25px',
+                      height: '25px',
+                    }}
+                  >
+                    <Image
+                      src={postImage}
+                      alt={postImage}
+                      objectFit="cover"
+                      width="25px"
+                      height="25px"
+                    />
+                  </div>
+                ) : (
+                  <AccountCircle />
+                )}
+
                 <Box component="span" sx={{ ml: 1.5, fontSize: '1rem' }}>
                   {user?.getUsername()}
                 </Box>
