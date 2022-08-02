@@ -111,8 +111,6 @@ export default function PostPreview({ post }: Props) {
       }
       setExistingVote(voteType);
       setExistingVoteId(updateThisVote.data.updateVote!.id);
-
-      console.log('Updated vote:', updateThisVote);
     }
 
     if (!existingVote) {
@@ -135,8 +133,6 @@ export default function PostPreview({ post }: Props) {
       }
       setExistingVote(voteType);
       setExistingVoteId(createNewVote.data.createVote!.id);
-
-      console.log('Created vote:', createNewVote);
     }
 
     if (existingVote === voteType) {
@@ -153,6 +149,14 @@ export default function PostPreview({ post }: Props) {
     }
 
     setOpen(false);
+  };
+
+  const checkUserLogin = (vote: string) => {
+    if (!user) {
+      setOpen(true);
+    } else {
+      addVote(vote);
+    }
   };
 
   return (
@@ -179,7 +183,10 @@ export default function PostPreview({ post }: Props) {
         <Grid item style={{ maxWidth: 128 }}>
           <Grid container direction="column" alignItems="center">
             <Grid item>
-              <IconButton color="inherit" onClick={() => addVote('upvote')}>
+              <IconButton
+                color="inherit"
+                onClick={() => checkUserLogin('upvote')}
+              >
                 {upvotes ? <ArrowUpward color="success" /> : <ArrowUpward />}
               </IconButton>
             </Grid>
@@ -194,7 +201,10 @@ export default function PostPreview({ post }: Props) {
               </Grid>
             </Grid>
             <Grid item>
-              <IconButton color="inherit" onClick={() => addVote('downvote')}>
+              <IconButton
+                color="inherit"
+                onClick={() => checkUserLogin('downvote')}
+              >
                 {downvotes ? (
                   <ArrowDownward color="error" />
                 ) : (
