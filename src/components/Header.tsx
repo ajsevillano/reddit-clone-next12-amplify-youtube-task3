@@ -66,6 +66,7 @@ export default function Header() {
   };
 
   const signUserOut = async () => {
+    setAnchorEl(null);
     await Auth.signOut();
   };
 
