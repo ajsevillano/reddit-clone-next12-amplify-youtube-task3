@@ -52,7 +52,9 @@ export default function Header() {
       }
     }
 
-    getImageFromStorage();
+    if (userProfilePictureURL) {
+      getImageFromStorage();
+    }
   });
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
