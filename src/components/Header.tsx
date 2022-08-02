@@ -24,16 +24,29 @@ import {
 
 export default function Header() {
   const router = useRouter();
-  const { user, userInfo } = useUser();
+  const { user } = useUser();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [postImage, setPostImage] = useState<string | undefined>();
+  const [userProfilePicture, setUserProfilePicture] = useState<
+    string | undefined
+  >();
+  const [userProfilePictureURL, setUserProfilePictureURL] = useState<
+    string | undefined
+  >();
 
+  // Getting the user attribute "image" from the user object.
+  useEffect(() => {
+    user?.getUserAttributes((err, result) => {
+      setUserProfilePictureURL(result![3].Value);
+    });
+  }, [user]);
+
+  // Getting the image from the storage and setting it to the state.
   useEffect(() => {
     async function getImageFromStorage() {
       try {
-        const signedURL = await Storage.get(userInfo?.picture!); // get key from Storage.list
-        setPostImage(signedURL);
+        const signedURL = await Storage.get(userProfilePictureURL!); // get key from Storage.list
+        setUserProfilePicture(signedURL);
       } catch (error) {
         console.log('No image found.');
       }
@@ -93,7 +106,7 @@ export default function Header() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                {postImage ? (
+                {userProfilePicture ? (
                   <div
                     style={{
                       borderRadius: '50%',
@@ -103,8 +116,8 @@ export default function Header() {
                     }}
                   >
                     <Image
-                      src={postImage}
-                      alt={postImage}
+                      src={userProfilePicture}
+                      alt={userProfilePicture}
                       objectFit="cover"
                       width="25px"
                       height="25px"

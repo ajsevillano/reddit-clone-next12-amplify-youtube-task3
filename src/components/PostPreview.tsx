@@ -37,7 +37,7 @@ interface Props {
 
 export default function PostPreview({ post }: Props) {
   const router = useRouter();
-  const { user, userInfo } = useUser();
+  const { user } = useUser();
   const [open, setOpen] = useState<boolean>(false);
   const [postImage, setPostImage] = useState<string>();
   const [existingVote, setExistingVote] = useState<string | undefined>(
