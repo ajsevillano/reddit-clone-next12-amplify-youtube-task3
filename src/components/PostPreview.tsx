@@ -37,7 +37,7 @@ interface Props {
 
 export default function PostPreview({ post }: Props) {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, userInfo } = useUser();
   const [open, setOpen] = useState<boolean>(false);
   const [postImage, setPostImage] = useState<string>();
   const [existingVote, setExistingVote] = useState<string | undefined>(
@@ -51,8 +51,6 @@ export default function PostPreview({ post }: Props) {
       ? post.votes!.items.filter((v) => v!.vote === 'upvote').length
       : 0
   );
-
-  console.log(upvotes);
 
   const [downvotes, setDownvotes] = useState<number>(
     post.votes!.items
@@ -85,6 +83,10 @@ export default function PostPreview({ post }: Props) {
 
     getImageFromStorage();
   });
+
+  // console.log(userInfo?.attributes.picture);
+
+  console.log(user);
 
   const addVote = async (voteType: string) => {
     if (existingVote && existingVote != voteType) {
@@ -250,7 +252,7 @@ export default function PostPreview({ post }: Props) {
       </Grid>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          Only one vote is allow per post.
+          Only one vote per post is allow.
         </Alert>
       </Snackbar>
     </Paper>
