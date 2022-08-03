@@ -7,18 +7,15 @@ import { Button, Grid, TextField } from '@mui/material';
 import { Auth } from 'aws-amplify';
 
 //Context
-import { useUser } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 
 interface IFormInput {
   username: string;
-
   password: string;
 }
 
 export default function Login() {
   const router = useRouter();
-  const [signInError, setSignInError] = useState<string>('');
 
   /* Destructuring the useForm hook. */
   const {
