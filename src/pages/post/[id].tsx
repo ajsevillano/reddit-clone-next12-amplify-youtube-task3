@@ -1,5 +1,6 @@
 //React, React Hooks & Next libraries
 import { useState } from 'react';
+import { useUser } from '../../context/AuthContext';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useForm, SubmitHandler } from 'react-hook-form';
 //Amplify
@@ -18,10 +19,18 @@ import {
   Comment,
 } from '../../API';
 //Material
-import { Button, Container, Grid, TextField } from '@mui/material';
+import {
+  Button,
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 //Components
 import PostPreview from '../../components/PostPreview';
 import PostComment from '../../components/PostComment';
+import router from 'next/router';
 
 //Interfaces
 interface IFormInput {
@@ -32,6 +41,7 @@ type Props = {
 };
 
 export default function IndividualPost({ post }: Props) {
+  const { user } = useUser();
   const [comments, setComments] = useState<Comment[]>(
     post.comments!.items as Comment[]
   );
@@ -69,35 +79,77 @@ export default function IndividualPost({ post }: Props) {
         style={{ marginTop: 32, marginBottom: 32 }}
       >
         <Grid container spacing={2} direction="row" alignItems="center">
-          <Grid item style={{ flexGrow: 1 }}>
-            <TextField
-              variant="outlined"
-              id="comment"
-              label="Add a comment"
-              type="text"
-              multiline
-              fullWidth
-              error={errors.comment ? true : false}
-              helperText={errors.comment ? errors.comment.message : null}
-              sx={{ fieldset: { border: '1px solid #4b4b4b' } }}
-              {...register('comment', {
-                required: { value: true, message: 'Please enter a comment.' },
-                minLength: {
-                  value: 3,
-                  message: 'Please enter a comment between 3-16 characters.',
-                },
-                maxLength: {
-                  value: 240,
-                  message: 'Please enter a comment b under 240 characters.',
-                },
-              })}
-            />
-          </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" type="submit">
-              Add comment
-            </Button>
-          </Grid>
+          {!user ? (
+            <Grid item style={{ flexGrow: 1 }}>
+              <Paper
+                style={{
+                  width: '100%',
+                  minHeight: 28,
+                  padding: 16,
+                  marginTop: 0,
+                  borderTop: '5px  solid',
+                  borderImage: 'linear-gradient(to left, #f5af19, #e42a2a)',
+                  borderImageSlice: 1,
+                  borderWidth: '5px',
+                }}
+                elevation={1}
+              >
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Typography variant="body1">
+                    You need to <strong>login</strong> to be able to comment
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => router.push(`/login`)}
+                  >
+                    Login
+                  </Button>
+                </Grid>
+              </Paper>
+            </Grid>
+          ) : (
+            <>
+              <Grid item style={{ flexGrow: 1 }}>
+                <TextField
+                  variant="outlined"
+                  id="comment"
+                  label="Add a comment"
+                  type="text"
+                  multiline
+                  fullWidth
+                  error={errors.comment ? true : false}
+                  helperText={errors.comment ? errors.comment.message : null}
+                  sx={{ fieldset: { border: '1px solid #4b4b4b' } }}
+                  {...register('comment', {
+                    required: {
+                      value: true,
+                      message: 'Please enter a comment.',
+                    },
+                    minLength: {
+                      value: 3,
+                      message:
+                        'Please enter a comment between 3-16 characters.',
+                    },
+                    maxLength: {
+                      value: 240,
+                      message: 'Please enter a comment b under 240 characters.',
+                    },
+                  })}
+                />
+              </Grid>
+              <Grid item>
+                <Button variant="contained" color="primary" type="submit">
+                  Add comment
+                </Button>
+              </Grid>
+            </>
+          )}
         </Grid>
       </form>
       {comments
