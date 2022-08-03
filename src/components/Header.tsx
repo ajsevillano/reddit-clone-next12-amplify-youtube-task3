@@ -1,12 +1,11 @@
 //Next & React Libs
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 //Icons
 import { Add, Reddit, AccountCircle } from '@mui/icons-material';
 //Amplify
 import { Auth } from 'aws-amplify';
-import { Storage } from 'aws-amplify';
 //Context
 import { useUser } from '../context/AuthContext';
 //Material UI
@@ -21,41 +20,15 @@ import {
   MenuItem,
   Box,
 } from '@mui/material';
+//UseProfile Hook
+import useProfilePicture from '../lib/useProfilePicture';
 
 export default function Header() {
   const router = useRouter();
   const { user } = useUser();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [userProfilePicture, setUserProfilePicture] = useState<
-    string | undefined
-  >();
-  const [userProfilePictureURL, setUserProfilePictureURL] = useState<
-    string | undefined
-  >();
-
-  // Getting the user attribute "image" from the user object.
-  useEffect(() => {
-    user?.getUserAttributes((err, result) => {
-      setUserProfilePictureURL(result![3].Value);
-    });
-  }, [user]);
-
-  // Getting the image from the storage and setting it to the state.
-  useEffect(() => {
-    async function getImageFromStorage() {
-      try {
-        const signedURL = await Storage.get(userProfilePictureURL!); // get key from Storage.list
-        setUserProfilePicture(signedURL);
-      } catch (error) {
-        console.log('No image found.');
-      }
-    }
-
-    if (userProfilePictureURL) {
-      getImageFromStorage();
-    }
-  });
+  const { ProfilePicture } = useProfilePicture();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -109,7 +82,7 @@ export default function Header() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                {userProfilePicture ? (
+                {ProfilePicture ? (
                   <div
                     style={{
                       borderRadius: '50%',
@@ -119,8 +92,8 @@ export default function Header() {
                     }}
                   >
                     <Image
-                      src={userProfilePicture}
-                      alt={userProfilePicture}
+                      src={ProfilePicture}
+                      alt={ProfilePicture}
                       objectFit="cover"
                       width="25px"
                       height="25px"

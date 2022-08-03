@@ -3,49 +3,17 @@ import { Comment } from '../API';
 import { formatDatePosted } from '../lib/formatDatePosted';
 //Icons
 import { AccountCircle } from '@mui/icons-material';
-//Context
-import { useUser } from '../context/AuthContext';
-import { useEffect, useState } from 'react';
 //Next libs
 import Image from 'next/image';
-//Amplify
-import { Storage } from 'aws-amplify';
+//UseProfile Hook
+import useProfilePicture from '../lib/useProfilePicture';
 
 interface Props {
   comment: Comment;
 }
 
 export default function PostComment({ comment }: Props) {
-  const { user } = useUser();
-  const [userProfilePictureURL, setUserProfilePictureURL] = useState<
-    string | undefined
-  >();
-  const [userProfilePicture, setUserProfilePicture] = useState<
-    string | undefined
-  >();
-
-  // Getting the user attribute "image" from the user object.
-  useEffect(() => {
-    user?.getUserAttributes((err, result) => {
-      setUserProfilePictureURL(result![3].Value);
-    });
-  }, [user]);
-
-  // Getting the image from the storage and setting it to the state.
-  useEffect(() => {
-    async function getImageFromStorage() {
-      try {
-        const signedURL = await Storage.get(userProfilePictureURL!); // get key from Storage.list
-        setUserProfilePicture(signedURL);
-      } catch (error) {
-        console.log('No image found.');
-      }
-    }
-
-    if (userProfilePictureURL) {
-      getImageFromStorage();
-    }
-  });
+  const { ProfilePicture } = useProfilePicture();
 
   return (
     <Paper
@@ -60,7 +28,7 @@ export default function PostComment({ comment }: Props) {
     >
       <Grid container spacing={2} direction="column" alignItems="left">
         <Grid item container direction="row" alignItems="center">
-          {userProfilePicture ? (
+          {ProfilePicture ? (
             <div
               style={{
                 borderRadius: '50%',
@@ -70,8 +38,8 @@ export default function PostComment({ comment }: Props) {
               }}
             >
               <Image
-                src={userProfilePicture}
-                alt={userProfilePicture}
+                src={ProfilePicture}
+                alt={ProfilePicture}
                 objectFit="cover"
                 width="25px"
                 height="25px"
