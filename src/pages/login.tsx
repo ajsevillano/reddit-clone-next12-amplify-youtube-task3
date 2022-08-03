@@ -41,7 +41,7 @@ export default function Login() {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: '100vh' }}
+        style={{ minHeight: '80vh' }}
       >
         {/* User name input*/}
         <Grid style={{ marginTop: 16 }} item>
@@ -51,6 +51,7 @@ export default function Login() {
             label="Username"
             type="text"
             error={errors.username ? true : false}
+            sx={{ fieldset: { border: '1px solid #4b4b4b' } }}
             helperText={errors.username ? errors.username.message : null}
             {...register('username', {
               required: { value: true, message: 'Please enter a username.' },
@@ -74,6 +75,7 @@ export default function Login() {
             label="Password"
             type="password"
             error={errors.password ? true : false}
+            sx={{ fieldset: { border: '1px solid #4b4b4b' } }}
             helperText={errors.password ? errors.password.message : null}
             {...register('password', {
               required: { value: true, message: 'Please enter a password.' },

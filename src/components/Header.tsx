@@ -19,6 +19,7 @@ import {
   Menu,
   MenuItem,
   Box,
+  Grid,
 } from '@mui/material';
 //UseProfile Hook
 import useProfilePicture from '../lib/useProfilePicture';
@@ -58,7 +59,7 @@ export default function Header() {
           </IconButton>
           <Typography
             variant="h6"
-            style={{ flexGrow: 1 }}
+            style={{ flexGrow: 1, cursor: 'pointer' }}
             onClick={() => router.push(`/`)}
           >
             Reddit Clone
@@ -127,7 +128,12 @@ export default function Header() {
             </div>
           )}
           {!user && (
-            <>
+            <Grid
+              container
+              justifyContent="space-between"
+              direction="row"
+              style={{ width: 165 }}
+            >
               <Button variant="outlined" onClick={() => router.push(`/login`)}>
                 Login
               </Button>
@@ -138,7 +144,7 @@ export default function Header() {
               >
                 Sign Up
               </Button>
-            </>
+            </Grid>
           )}
         </Toolbar>
       </AppBar>
