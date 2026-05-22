@@ -1,34 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Reddit Clone - Next.js 12 + AWS Amplify
+
+> A Reddit-style forum built following the tutorial by [Jarrod Watts](https://www.youtube.com/watch?v=cLKLqpxPSws). Users can create posts with images, vote, and browse a feed. Built on Next.js 12 and AWS Amplify with a GraphQL API.
+
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)
+![AWS Amplify](https://img.shields.io/badge/AWS_Amplify-FF9900?style=flat&logo=awsamplify&logoColor=white)
+![GraphQL](https://img.shields.io/badge/GraphQL-E10098?style=flat&logo=graphql&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-007FFF?style=flat&logo=mui&logoColor=white)
+
+## Features
+
+- Create and browse posts
+- Image uploads via AWS S3 (react-dropzone)
+- GraphQL API backed by AWS AppSync
+- User authentication via AWS Cognito
+- Voting on posts
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- AWS account with Amplify CLI configured
+- Node.js
+
+### Setup
 
 ```bash
+# Install dependencies
+npm install
+
+# Initialize Amplify backend
+amplify init
+
+# Deploy the backend
+amplify push
+
+# Run the app
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Next.js 12
+- AWS Amplify (AppSync GraphQL + Cognito + S3)
+- MUI v5
+- react-hook-form
+- react-dropzone
